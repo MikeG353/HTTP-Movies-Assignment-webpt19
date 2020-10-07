@@ -61,8 +61,18 @@ const UpdateMovieForm = (props) => {
             .then(res => {
                 // server should return a new movie list
                 console.log(res)
-                props.setMovieList(res.data)
-                push(`/movies`)
+                console.log(props.movies)
+                const newMovieArray = props.movies.map(movie => {
+                    if (movie.id === id) {
+                        return res.data
+                    }
+                    else {
+                        return movie
+                    }
+                })
+                props.setMovieList(newMovieArray)
+                
+                push(`/movies/${id}`)
             })
             .catch(err => {
                 console.error(`unable to update movie id: ${id}: `, err)
